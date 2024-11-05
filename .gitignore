@@ -1,3 +1,4 @@
+# CMake-Ignores
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
@@ -10,3 +11,26 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+
+# cland-Ignores
+.cache/
+
+# VSCode-Ignores
+.vscode/
+build/
+
+# macOS-Ignores
+.DS_Store
+
+# Project-Ignores
+bin/
+lib/
+generated/
+log-*.txt
+
+# Ninja-Ignores
+.ninja_deps
+.ninja_log
+build.ninja
