@@ -72,7 +72,7 @@ jobs:
 
     - name: Upload artifact
       # Upload the build directory as an artifact. This is useful if you want to download the build results after the workflow run.
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: build
         path: ${{ steps.strings.outputs.build-output-dir }}
