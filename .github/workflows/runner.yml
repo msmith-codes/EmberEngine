@@ -1,0 +1,7 @@
+name: 🔗 GitHub Action
+on: [push, pull_request, merge_group]
+
+jobs:
+    static-checks:
+        name: 📊 Static Checks
+        uses: ./.github/workflows/static_checks.yml
