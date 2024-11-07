@@ -3,6 +3,7 @@
 // -- Custom -- //
 #include <Ember/utils/Logger.hpp>
 #include <Ember/utils/Helper.hpp>
+#include <Ember/input/KeyListener.hpp>
 
 // -- STD -- //
 
@@ -124,6 +125,7 @@ namespace Ember
         glfwWindowHint(GLFW_RESIZABLE, this->resizable);
         glfwWindowHint(GLFW_SAMPLES, 4);
 
+        // Create the window for fullscreen or not
         if(this->fullscreen) {
             GLFWmonitor* monitor = glfwGetPrimaryMonitor();
             const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -134,10 +136,14 @@ namespace Ember
             this->window = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
         }
 
+        // Check if the window failed to create
         if(this->window == nullptr) {
             Logger::fatal("Failed to create GLFW window");
             exit(EXIT_FAILURE);
         }
+
+        // Register input callbacks
+        glfwSetKeyCallback(this->window, KeyListener::keyCallback);
 
         // Make the window's context current
         glfwMakeContextCurrent(this->window);

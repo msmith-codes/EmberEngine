@@ -19,6 +19,8 @@ namespace Ember
         this->renderer = new Renderer();
 
         this->currentFPS = 0;
+
+        Application::setInstance(this);
     }
 
     Application::~Application()

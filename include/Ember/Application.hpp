@@ -10,7 +10,7 @@ namespace Ember
     {
         private: // Singleton Instance
             static Application* instance;
-        public:
+        protected:
             Window* window;
             Renderer* renderer;
         private:
