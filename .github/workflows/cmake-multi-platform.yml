@@ -69,3 +69,10 @@ jobs:
     - name: Install dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update && sudo apt-get install -y wayland-protocols wayland-devel
+
+    - name: Upload artifact
+      # Upload the build directory as an artifact. This is useful if you want to download the build results after the workflow run.
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: ${{ steps.strings.outputs.build-output-dir }}
