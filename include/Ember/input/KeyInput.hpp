@@ -126,6 +126,9 @@ namespace Ember
             static unsigned int KEY_RIGHT_ALT;
             static unsigned int KEY_RIGHT_SUPER;
             static unsigned int KEY_MENU;
+        public: // Methods
+            static bool isKeyPressed(int key);
+            static bool isKeyJustPressed(int key);
     };
 };
 

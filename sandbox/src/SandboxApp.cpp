@@ -24,11 +24,11 @@ class SandboxApp : public Ember::Application
 
         void onUpdate(float delta) override
         {
-            if(Ember::KeyListener::isKeyJustPressed(Ember::KeyInput::KEY_SPACE)) {
+            if(Ember::KeyInput::isKeyJustPressed(Ember::KeyInput::KEY_SPACE)) {
                 Ember::Logger::info("Space key was pressed!");
             }
 
-            if(Ember::KeyListener::isKeyPressed(Ember::KeyInput::KEY_A)) {
+            if(Ember::KeyInput::isKeyPressed(Ember::KeyInput::KEY_A)) {
                 Ember::Logger::info("A key is being held down!");
             }
         }
@@ -48,6 +48,5 @@ class SandboxApp : public Ember::Application
 Ember::Application* Ember::createApplication()
 {
     Application* app = new SandboxApp(); // Create the application.
-    // app->setInstance(app);
     return app;
 }

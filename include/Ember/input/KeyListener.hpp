@@ -17,9 +17,8 @@ namespace Ember
             static KeyListener& getInstance();
         public: // Callbacks
             static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-        public: // Methods
-            static bool isKeyPressed(int key);
-            static bool isKeyJustPressed(int key);
+        public: // Getters
+            std::vector<bool> getKeys() const;
             
     };
 }

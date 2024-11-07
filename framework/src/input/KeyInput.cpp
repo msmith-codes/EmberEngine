@@ -1,10 +1,12 @@
 #include <Ember/input/KeyInput.hpp>
+#include <Ember/input/KeyListener.hpp>
 
 // Note:
 // Values are based on the GLFW key codes.
 // https://www.glfw.org/docs/3.3/group__keys.html
 namespace Ember
 {
+    // Key Input Values
     unsigned int KeyInput::KEY_SPACE = 32;
     unsigned int KeyInput::KEY_APOSTROPHE = 39;
     unsigned int KeyInput::KEY_COMMA = 44;
@@ -125,4 +127,25 @@ namespace Ember
     unsigned int KeyInput::KEY_RIGHT_ALT = 346;
     unsigned int KeyInput::KEY_RIGHT_SUPER = 347;
     unsigned int KeyInput::KEY_MENU = 348;
+
+    // Methods
+    //-------------------------------------------------------------------------
+    bool KeyInput::isKeyPressed(int key)
+    {
+        return KeyListener::getInstance().getKeys()[key];
+    }
+
+    bool KeyInput::isKeyJustPressed(int key)
+    {
+        static bool lastState = false;
+        bool currentState = KeyListener::getInstance().getKeys()[key];
+
+        if(currentState && !lastState) {
+            lastState = currentState;
+            return true;
+        } else {
+            lastState = currentState;
+            return false;
+        }
+    }
 }

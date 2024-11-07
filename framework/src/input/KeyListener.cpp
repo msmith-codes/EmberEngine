@@ -30,26 +30,10 @@ namespace Ember
         }
     }
 
-    // Methods
+    // Getters
     //-------------------------------------------------------------------------
-    bool KeyListener::isKeyPressed(int key)
+    std::vector<bool> KeyListener::getKeys() const
     {
-        return KeyListener::getInstance().keys[key];
+        return this->keys;
     }
-
-    bool KeyListener::isKeyJustPressed(int key)
-    {
-        static bool lastState = false;
-        bool currentState = KeyListener::getInstance().keys[key];
-
-        if(currentState && !lastState) {
-            lastState = currentState;
-            return true;
-        } else {
-            lastState = currentState;
-            return false;
-        }
-    }
-
-
 }
