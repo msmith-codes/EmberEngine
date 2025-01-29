@@ -1,12 +1,29 @@
+# cmake-specific ignores:
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Testing
-Makefile
 cmake_install.cmake
 install_manifest.txt
-compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+
+# make-specific ignores:
+Makefile
+
+# ninja-specific ignores:
+build.ninja
+.ninja_deps
+.ninja_log
+
+# clang-specific ignores:
+compile_commands.json
+
+# editor-specific ignores:
+.vscode/
+
+# build-specific ignores:
+bin/
+lib/
