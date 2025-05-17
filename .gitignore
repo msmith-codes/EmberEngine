@@ -1,12 +1,21 @@
-CMakeLists.txt.user
+############################
+#  CMake Specific Ignores  #
+############################
 CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
+CMakeFiles/
+build/
+
+############################
+#  Build Specific Ignores  #
+############################
 Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
-CMakeUserPresets.json
+
+############################
+#  Clang Specific Ignores  #
+############################
+.cache/
+
+#########################
+#  OS Specific Ignores  #
+#########################
+.DS_Store
