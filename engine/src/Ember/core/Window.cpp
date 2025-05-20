@@ -1,120 +1,84 @@
 #include <Ember/core/Window.hpp>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <iostream>
+#include <raylib.h>
 
 namespace Ember
 {
-    // -- Singleton Accessor -- //
-    Window& Window::GetInstance()
+    Window& Window::getInstance()
     {
-        static Window Instance;
-        return Instance;
+        static Window instance;
+        return instance;
     }
 
-    // -- Constructor -- //
     Window::Window()
     {
         this->width = 800;
         this->height = 600;
         this->title = "EmberEngine";
-
-        this->vsync = true;
     }
 
-    // -- Destructor -- //
-    Window::~Window() = default;
+    Window::~Window()
+    {
+
+    }
 
     // -- Static Methods -- //
-    void Window::Create(unsigned int width, unsigned int height, const std::string& title)
+    void Window::create(const std::string& title, unsigned int width, unsigned int height)
     {
-        Window& self = Window::GetInstance();
-
+        Window& self = Window::getInstance();
+        self.title = title;
         self.width = width;
         self.height = height;
+
+        InitWindow(self.width, self.height, self.title.c_str());
+        SetExitKey(KEY_NULL);
+    }
+
+    bool Window::shouldClose()
+    {
+        return WindowShouldClose();
+    }
+
+    void Window::shutdown()
+    {
+        CloseWindow();
+    }
+
+    // -- Static Getters -- //
+    std::string& Window::getTitle()
+    {
+        return Window::getInstance().title;
+    }
+
+    unsigned int Window::getWidth()
+    {
+        return Window::getInstance().width;
+    }
+
+    unsigned int Window::getHeight()
+    {
+        return Window::getInstance().height;
+    }
+
+    // -- Static Setters -- //
+    void Window::setTitle(const std::string& title)
+    {
+        Window& self = Window::getInstance();
         self.title = title;
 
-        if(!glfwInit()) {
-            std::cerr << "Failed to initialize GLFW." << std::endl;
-            std::exit(EXIT_FAILURE);
-        }
-
-        // Configure GLFW.
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        self.window = glfwCreateWindow(self.width, self.height, self.title.c_str(), nullptr, nullptr);
-        if(!self.window) {
-            std::cerr << "Failed to create GLFW window." << std::endl;
-            glfwTerminate();
-            std::exit(EXIT_FAILURE);
-        }
-
-        GLFWmonitor* primary = glfwGetPrimaryMonitor();
-        if(primary) {
-            const GLFWvidmode* vidMode = glfwGetVideoMode(primary);
-            if(vidMode) {
-                int monitorX;
-                int monitorY;
-
-                glfwGetMonitorWorkarea(primary, &monitorX, &monitorY, nullptr, nullptr);
-
-                int xPos = monitorX + (vidMode->width - self.width) / 2;
-                int yPos = monitorY + (vidMode->height - self.height) / 2;
-                glfwSetWindowPos(self.window, xPos, yPos);
-            }
-        }
-
-        glfwMakeContextCurrent(self.window);
-        glfwSwapInterval(self.vsync); // <-- Enables VSync.
-
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-            std::cerr << "Failed to initialize OpenGL loader\n";
-            std::exit(EXIT_FAILURE);
+        if(IsWindowReady()) {
+            SetWindowTitle(self.title.c_str());
         }
     }
 
-    void Window::Shutdown()
+    void Window::setSize(unsigned int width, unsigned int height)
     {
-        Window& self = Window::GetInstance();
-        if(self.window) {
-            glfwDestroyWindow(self.window);
-            glfwTerminate();
-            self.window = nullptr;
+        Window& self = Window::getInstance();
+        self.width = width;
+        self.height = height;
+
+        if(IsWindowReady()) {
+            SetWindowSize(self.width, self.height);
         }
     }
-
-    void Window::PollEvents()
-    {
-        glfwPollEvents();
-    }
-
-    void Window::SwapBuffers()
-    {
-        Window& self = Window::GetInstance();
-        glfwSwapBuffers(self.window);
-    }
-
-    void Window::Clear()
-    {
-        Window& self = Window::GetInstance();
-
-        int width;
-        int height;
-
-        glfwGetFramebufferSize(self.window, &width, &height);
-        glViewport(0, 0, width, height);
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
-
-    bool Window::ShouldClose()
-    {
-        Window& self = Window::GetInstance();
-        return glfwWindowShouldClose(self.window);
-    }
-
 }

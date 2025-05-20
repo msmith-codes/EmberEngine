@@ -24,13 +24,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #####################
 #  Compile Vendors  #
 #####################
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/miniz)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/raylib)
 
 #########################
 #  Compile EmberEngine  #
 #########################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/engine)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/sandbox)

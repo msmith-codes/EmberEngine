@@ -3,35 +3,32 @@
 
 #include <string>
 
-struct GLFWwindow;
-
 namespace Ember
 {
     class Window
     {
-        private: // -- Window Utilities -- //
-            GLFWwindow* window = nullptr;
-        private: // -- Window Properties -- // 
+        public:
+            static Window& getInstance();
+        private:
+            std::string title;
             unsigned int width;
             unsigned int height;
-            std::string title;
-            bool vsync;
-        public: // -- Singleton Accessor -- //
-            static Window& GetInstance();
-        private: // -- Singleton Guards -- //
-            Window(const Window&) = delete;
-            Window& operator=(const Window&) = delete;
-        private: // -- Constructor -- //
+        private:
             Window();
-        public: // -- Destructor -- //
+        public:
             ~Window();
         public: // -- Static Methods -- //
-            static void Create(unsigned int width, unsigned int height, const std::string& title);
-            static void Shutdown();
-            static void PollEvents();
-            static void SwapBuffers();
-            static void Clear();
-            static bool ShouldClose();
+            static void create(const std::string& title, unsigned int width, unsigned int height);
+            static void shutdown();
+            static bool shouldClose();
+        public: // -- Static Getters -- //
+            static std::string& getTitle();
+            static unsigned int getWidth();
+            static unsigned int getHeight();
+        public: // -- Static Setters -- //
+            static void setTitle(const std::string& title);
+            static void setSize(unsigned int width, unsigned int height);
+
 
     };
 }
