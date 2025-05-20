@@ -32,4 +32,14 @@ namespace Ember
             Application::instance = instance;
         }
     }
+
+    void Application::changeScene(const std::string& sceneName)
+    {
+        Application* self = Application::getInstance();
+    }
+
+    void Application::setDefaultScene(const std::string& sceneName)
+    {
+
+    }
 }
