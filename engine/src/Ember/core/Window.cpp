@@ -34,7 +34,7 @@ namespace Ember
         SetExitKey(KEY_NULL);
     }
 
-    bool Window::shouldClose()
+    bool Window::should_close()
     {
         return WindowShouldClose();
     }
@@ -45,23 +45,23 @@ namespace Ember
     }
 
     // -- Static Getters -- //
-    std::string& Window::getTitle()
+    std::string& Window::get_title()
     {
         return Window::get_singleton().title;
     }
 
-    unsigned int Window::getWidth()
+    unsigned int Window::get_width()
     {
         return Window::get_singleton().width;
     }
 
-    unsigned int Window::getHeight()
+    unsigned int Window::get_height()
     {
         return Window::get_singleton().height;
     }
 
     // -- Static Setters -- //
-    void Window::setTitle(const std::string& title)
+    void Window::set_title(const std::string& title)
     {
         Window& self = Window::get_singleton();
         self.title = title;
@@ -71,7 +71,7 @@ namespace Ember
         }
     }
 
-    void Window::setSize(unsigned int width, unsigned int height)
+    void Window::set_size(unsigned int width, unsigned int height)
     {
         Window& self = Window::get_singleton();
         self.width = width;

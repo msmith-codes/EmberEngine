@@ -4,13 +4,19 @@ project(Ember)
 #####################
 #  Configure C/C++  #
 #####################
-set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+
+if(DEFINED EE_PLATFORM_DEFINE)
+    add_compile_definitions(${EE_PLATFORM_DEFINE})
+endif()
 
 #####################
 #  Configure CMake  #
@@ -25,10 +31,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #  Compile Vendors  #
 #####################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/miniz)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/lua)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/physfs)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/raylib)
 
 #########################
 #  Compile EmberEngine  #
 #########################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/engine)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/runtime)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/editor)
