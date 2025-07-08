@@ -8,7 +8,7 @@ namespace Ember
     class Window
     {
         public:
-            static Window& getInstance();
+            static Window& get_singleton();
         private:
             std::string title;
             unsigned int width;

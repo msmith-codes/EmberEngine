@@ -4,7 +4,7 @@
 
 namespace Ember
 {
-    Window& Window::getInstance()
+    Window& Window::get_singleton()
     {
         static Window instance;
         return instance;
@@ -25,7 +25,7 @@ namespace Ember
     // -- Static Methods -- //
     void Window::create(const std::string& title, unsigned int width, unsigned int height)
     {
-        Window& self = Window::getInstance();
+        Window& self = Window::get_singleton();
         self.title = title;
         self.width = width;
         self.height = height;
@@ -47,23 +47,23 @@ namespace Ember
     // -- Static Getters -- //
     std::string& Window::getTitle()
     {
-        return Window::getInstance().title;
+        return Window::get_singleton().title;
     }
 
     unsigned int Window::getWidth()
     {
-        return Window::getInstance().width;
+        return Window::get_singleton().width;
     }
 
     unsigned int Window::getHeight()
     {
-        return Window::getInstance().height;
+        return Window::get_singleton().height;
     }
 
     // -- Static Setters -- //
     void Window::setTitle(const std::string& title)
     {
-        Window& self = Window::getInstance();
+        Window& self = Window::get_singleton();
         self.title = title;
 
         if(IsWindowReady()) {
@@ -73,7 +73,7 @@ namespace Ember
 
     void Window::setSize(unsigned int width, unsigned int height)
     {
-        Window& self = Window::getInstance();
+        Window& self = Window::get_singleton();
         self.width = width;
         self.height = height;
 

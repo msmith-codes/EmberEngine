@@ -21,24 +21,24 @@ namespace Ember
 
     }
 
-    Application* Application::getInstance()
+    Application* Application::get_singleton()
     {
         return Application::instance;
     }
 
-    void Application::setInstance(Application* instance)
+    void Application::set_singleton(Application* instance)
     {
         if(!Application::instance) {
             Application::instance = instance;
         }
     }
 
-    void Application::changeScene(const std::string& sceneName)
+    void Application::change_scene(const std::string& sceneName)
     {
-        Application* self = Application::getInstance();
+        Application* self = Application::get_singleton();
     }
 
-    void Application::setDefaultScene(const std::string& sceneName)
+    void Application::set_default_scene(const std::string& sceneName)
     {
 
     }

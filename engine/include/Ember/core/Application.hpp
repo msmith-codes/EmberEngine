@@ -15,19 +15,20 @@ namespace Ember
         public: // -- Methods -- //
             void run();
         public:
-            static Application* getInstance();
-            static void setInstance(Application* instance);
+            static Application* get_singleton();
+            static void set_singleton(Application* instance);
         public:
-            static void changeScene(const std::string& sceneName);
-            static void setDefaultScene(const std::string& sceneName);
+            static void change_scene(const std::string& sceneName);
+            static void set_default_scene(const std::string& sceneName);
         protected:
-            virtual void onCreate() = 0;
-            virtual void onUpdate(float delta) = 0;
-            virtual void onRender() = 0;
-            virtual void onShutdown() = 0;
+            virtual void on_create() = 0;
+            virtual void on_update(float delta) = 0;
+            virtual void on_render() = 0;
+            virtual void on_shutdown() = 0;
     };
 
-    Application* createApplication();
+    // To be defined in client.
+    Application* create_application();
 }
 
 #endif
