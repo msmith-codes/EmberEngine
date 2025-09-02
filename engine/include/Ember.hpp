@@ -1,5 +1,4 @@
-#ifndef EE_Ember_HPP
-#define EE_Ember_HPP
+#pragma once
 
 #include <vector>
 
@@ -10,4 +9,3 @@
 #include <Ember/core/Application.hpp>
 #include <Ember/core/Window.hpp>
 
-#endif

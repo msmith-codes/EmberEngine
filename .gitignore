@@ -4,11 +4,17 @@
 CMakeCache.txt
 CMakeFiles/
 build/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+cmake_install.cmake
+compile_commands.json
 
 ############################
 #  Build Specific Ignores  #
 ############################
 Makefile
+bin/
+lib/
 
 ############################
 #  Clang Specific Ignores  #

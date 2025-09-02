@@ -21,7 +21,7 @@ namespace Ember
     // -- Methods -- //
     void Application::run()
     {
-        Application::get_singleton()->on_create();
+        Application::get_singleton()->on_compose();
 
         while(!Window::should_close()) {
             float delta = GetFrameTime();
@@ -33,7 +33,7 @@ namespace Ember
             EndDrawing();
         }
 
-        Application::get_singleton()->on_shutdown();
+        Application::get_singleton()->on_dispose();
     }
 
     Application* Application::get_singleton()
@@ -48,13 +48,19 @@ namespace Ember
         }
     }
 
-    void Application::change_scene(const std::string& sceneName)
+    void Application::change_scene(Scene* scene)
     {
+        if(!Application::instance) {
+            return;
+        }
+        
+        if(Application::instance->scene) {
+            Application::instance->scene->on_dispose();
+            delete Application::instance->scene;
+            Application::instance->scene = nullptr;
+        }
 
-    }
-
-    void Application::set_default_scene(const std::string& sceneName)
-    {
-
+        Application::instance->scene = scene;
+        Application::instance->scene->on_compose();
     }
 }

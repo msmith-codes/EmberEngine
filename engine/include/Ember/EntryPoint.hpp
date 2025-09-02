@@ -1,11 +1,10 @@
-#ifndef EE_EntryPoint_HPP
-#define EE_EntryPoint_HPP
+#pragma once
 
 #include <Ember/core/Application.hpp>
 
 extern Ember::Application* Ember::create_application();
 
-#if defined(EE_PLATFORM_MACOS)
+#if defined(EE_PLATFORM_MACOS) || defined(EE_PLATFORM_LINUX) || defined(EE_PLATFORM_WINDOWS)
 
 int main(int argc, char* argv[])
 {
@@ -18,4 +17,3 @@ int main(int argc, char* argv[])
 
 #endif
 
-#endif

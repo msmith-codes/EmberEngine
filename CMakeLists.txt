@@ -31,13 +31,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #  Compile Vendors  #
 #####################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/lua)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/physfs)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/raylib)
 
 #########################
 #  Compile EmberEngine  #
 #########################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/engine)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/runtime)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/editor)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/asteroids)

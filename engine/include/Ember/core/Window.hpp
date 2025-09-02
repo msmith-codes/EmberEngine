@@ -1,5 +1,4 @@
-#ifndef EE_Window_HPP
-#define EE_Window_HPP
+#pragma once
 
 #include <string>
 
@@ -33,4 +32,3 @@ namespace Ember
     };
 }
 
-#endif
