@@ -23,18 +23,25 @@ endif()
 #####################
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
 #####################
 #  Compile Vendors  #
 #####################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/raylib)
+
+include(FetchContent)
+FetchContent_Declare(raylib
+    GIT_REPOSITORY "https://github.com/raysan5/raylib.git"
+    GIT_TAG "master"
+)
+
+FetchContent_MakeAvailable(raylib)
 
 #########################
 #  Compile EmberEngine  #
 #########################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/engine)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/asteroids)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/sandbox)
