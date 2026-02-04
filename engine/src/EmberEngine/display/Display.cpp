@@ -13,7 +13,7 @@ namespace EmberEngine
     void Display::create(unsigned int width, unsigned int height, const std::string& title)
     {
         InitWindow(width, height, title.c_str());
-
+        SetExitKey(KEY_NULL);
     }
 
     void Display::destroy()
