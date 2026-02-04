@@ -15,6 +15,7 @@ compile_commands.json
 Makefile
 bin/
 lib/
+out/
 
 ############################
 #  Clang Specific Ignores  #
