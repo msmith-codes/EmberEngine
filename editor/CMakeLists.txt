@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(SandboxApp)
+project(EmberEditor)
 
 file(GLOB_RECURSE SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
@@ -15,4 +15,5 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC
         EmberEngine
+        nfd
 )

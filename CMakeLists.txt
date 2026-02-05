@@ -14,10 +14,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 
-if(DEFINED EE_PLATFORM_DEFINE)
-    add_compile_definitions(${EE_PLATFORM_DEFINE})
-endif()
-
 #####################
 #  Configure CMake  #
 #####################
@@ -38,10 +34,16 @@ FetchContent_Declare(raylib
     GIT_TAG "master"
 )
 
-FetchContent_MakeAvailable(raylib)
+FetchContent_Declare(nfd
+    GIT_REPOSITORY "https://github.com/btzy/nativefiledialog-extended.git"
+    GIT_TAG "v1.3.0"
+)
+
+
+FetchContent_MakeAvailable(raylib nfd)
 
 #########################
 #  Compile EmberEngine  #
 #########################
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/engine)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/sandbox)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/editor)
