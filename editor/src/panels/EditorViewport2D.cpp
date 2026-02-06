@@ -15,11 +15,8 @@ EditorViewport2D::EditorViewport2D()
       current_mode(EditorMode::Select), is_placing_wall(false), 
       wall_start_pos({0, 0}), current_mouse_world_pos({0, 0}), selected_wall_index(-1),
       selected_room_index(-1), is_dragging_vertex(false), dragging_wall_index(-1), 
-      dragging_start_vertex(true)
+      dragging_start_vertex(true), current_map_path("")
 {
-    this->map_path_buffer[0] = '\0';
-    std::strncpy(this->map_path_buffer, "level.map", sizeof(this->map_path_buffer) - 1);
-    this->map_path_buffer[sizeof(this->map_path_buffer) - 1] = '\0';
 
     this->render_texture = ::LoadRenderTexture(static_cast<int>(this->viewport_size.x), 
                                               static_cast<int>(this->viewport_size.y));
@@ -117,13 +114,17 @@ void EditorViewport2D::render_ui()
         ImGui::SameLine();
         ImGui::Text("|");
         ImGui::SameLine();
-        ImGui::Text("Map Path:");
+        ImGui::Text("Current Map:");
         ImGui::SameLine();
-        ImGui::SetNextItemWidth(200.0f);
-        ImGui::InputText("##map_path", this->map_path_buffer, sizeof(this->map_path_buffer));
+        ImGui::Text("%s", this->get_current_map_filename().c_str());
         ImGui::SameLine();
-        if(ImGui::Button("Save Map")) {
-            EmberEditor::save_map(this->map_path_buffer, this->walls, this->rooms);
+        if(ImGui::Button("Save Map") && this->has_map_loaded()) {
+            EmberEditor::save_map(this->current_map_path, this->walls, this->rooms);
+        }
+        
+        // Handle Ctrl+S for saving
+        if(ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_S) && this->has_map_loaded()) {
+            EmberEditor::save_map(this->current_map_path, this->walls, this->rooms);
         }
 
         ImGui::Separator();
@@ -315,6 +316,10 @@ void EditorViewport2D::handle_input()
     }
     else if(this->current_mode == EditorMode::Select) {
         if(ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+            // Clear previous selections
+            this->selected_wall_index = -1;
+            this->selected_room_index = -1;
+            
             // First check if clicking on a vertex
             float vertex_threshold = 8.0f / this->camera.get_zoom();
             int closest_wall = -1;
@@ -343,6 +348,8 @@ void EditorViewport2D::handle_input()
                 this->dragging_wall_index = closest_wall;
                 this->dragging_start_vertex = is_start;
                 this->selected_wall_index = closest_wall;
+                // Clear room selection when wall is selected
+                this->selected_room_index = -1;
             } else {
                 // Check if clicking on a wall line
                 float selection_threshold = 10.0f / this->camera.get_zoom();
@@ -359,14 +366,20 @@ void EditorViewport2D::handle_input()
                     }
                 }
                 
-                this->selected_wall_index = closest_wall;
+                if(closest_wall != -1) {
+                    this->selected_wall_index = closest_wall;
+                    // Clear room selection when wall is selected
+                    this->selected_room_index = -1;
+                }
             }
             
-            // Check if clicking inside a room (only if not dragging vertex)
+            // Check if clicking inside a room (only if no wall was selected)
             if(closest_wall == -1 && !this->is_dragging_vertex) {
                 for(size_t i = 0; i < this->rooms.size(); ++i) {
                     if(this->point_in_polygon(this->current_mouse_world_pos, this->rooms[i].vertices)) {
                         this->selected_room_index = static_cast<int>(i);
+                        // Clear wall selection when room is selected
+                        this->selected_wall_index = -1;
                         break;
                     }
                 }
@@ -432,6 +445,32 @@ void EditorViewport2D::add_wall(const Wall& wall)
 void EditorViewport2D::clear_walls()
 {
     this->walls.clear();
+    this->current_map_path.clear();  // Clear map path when clearing walls
+}
+
+bool EditorViewport2D::load_map(const std::string& filepath)
+{
+    // Clear current level data
+    this->clear_walls();
+    this->rooms.clear();
+    this->selected_wall_index = -1;
+    this->selected_room_index = -1;
+    this->current_map_path.clear();  // Clear current path
+    
+    // Load new map data
+    bool success = EmberEditor::load_map(filepath, this->walls, this->rooms);
+    
+    if (success) {
+        // Store the loaded map path
+        this->current_map_path = filepath;
+        
+        // Regenerate rooms from walls if no rooms were loaded
+        if (this->rooms.empty()) {
+            this->detect_rooms();
+        }
+    }
+    
+    return success;
 }
 
 const std::vector<Wall>& EditorViewport2D::get_walls() const
@@ -664,4 +703,29 @@ void EditorViewport2D::set_selected_room_index(int index)
 bool EditorViewport2D::has_room_selection() const
 {
     return this->selected_room_index >= 0 && this->selected_room_index < static_cast<int>(this->rooms.size());
+}
+
+const std::string& EditorViewport2D::get_current_map_path() const
+{
+    return this->current_map_path;
+}
+
+std::string EditorViewport2D::get_current_map_filename() const
+{
+    if (this->current_map_path.empty()) {
+        return "Untitled Map";
+    }
+    
+    // Extract filename from path
+    size_t last_slash = this->current_map_path.find_last_of("/\\");
+    if (last_slash != std::string::npos) {
+        return this->current_map_path.substr(last_slash + 1);
+    }
+    
+    return this->current_map_path;
+}
+
+bool EditorViewport2D::has_map_loaded() const
+{
+    return !this->current_map_path.empty();
 }

@@ -5,11 +5,13 @@
 #include <panels/EditorViewport2D.hpp>
 #include <panels/EditorViewport3D.hpp>
 #include <panels/InspectorPanel.hpp>
+#include <panels/FileTree.hpp>
 
 #include <nfd.h>
 
 #include <algorithm>
 #include <cctype>
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 
@@ -227,6 +229,7 @@ class EditorApp : public EmberEngine::Application
         EditorViewport2D* viewport_2d;
         EditorViewport3D* viewport_3d;
         InspectorPanel* inspector;
+        FileTree* file_tree;
         ProjectConfig project_config;
         bool project_loaded;
         bool project_prompt_requested;
@@ -248,6 +251,27 @@ class EditorApp : public EmberEngine::Application
             this->viewport_2d = new EditorViewport2D();
             this->viewport_3d = new EditorViewport3D();
             this->inspector = new InspectorPanel();
+            this->file_tree = new FileTree();
+            
+            // Set up file loading callback
+            this->file_tree->set_file_activated_callback([this](const FileEntry& entry) {
+                if (entry.extension == ".map") {
+                    // Load map file
+                    EmberEngine::Logger::info("EditorApp", "Loading map: " + entry.res_path);
+                    
+                    // Convert res:// path back to filesystem path
+                    std::string filesystem_path = this->file_tree->from_res_path(entry.res_path);
+                    
+                    // Load the map into the 2D viewport
+                    if (this->viewport_2d->load_map(filesystem_path)) {
+                        EmberEngine::Logger::info("EditorApp", "Successfully loaded map: " + entry.name);
+                    } else {
+                        EmberEngine::Logger::error("EditorApp", "Failed to load map: " + entry.name);
+                    }
+                } else {
+                    EmberEngine::Logger::info("EditorApp", "File selected: " + entry.res_path);
+                }
+            });
 
             this->project_loaded = false;
             this->project_prompt_requested = true;
@@ -259,6 +283,7 @@ class EditorApp : public EmberEngine::Application
             delete this->viewport_2d;
             delete this->viewport_3d;
             delete this->inspector;
+            delete this->file_tree;
 
             NFD_Quit();
 
@@ -299,6 +324,13 @@ class EditorApp : public EmberEngine::Application
                                 ImGui::CloseCurrentPopup();
                                 EmberEngine::Display::set_title(this->project_config.display_title);
                                 EmberEngine::Display::set_size(this->project_config.display_width, this->project_config.display_height);
+                                
+                                // Update FileTree root to project directory
+                                std::filesystem::path project_file_path(this->project_path);
+                                std::string project_dir = project_file_path.parent_path().string();
+                                if (project_dir.empty()) project_dir = ".";
+                                this->file_tree->set_root_directory(project_dir);
+                                
                                 EmberEngine::Logger::info("EditorApp", "Loaded project: " + this->project_path);
                             } else if(!this->project_error.empty()) {
                                 EmberEngine::Logger::warn("EditorApp", this->project_error);
@@ -312,6 +344,13 @@ class EditorApp : public EmberEngine::Application
                                 ImGui::CloseCurrentPopup();
                                 EmberEngine::Display::set_title(this->project_config.display_title);
                                 EmberEngine::Display::set_size(this->project_config.display_width, this->project_config.display_height);
+                                
+                                // Update FileTree root to project directory
+                                std::filesystem::path project_file_path(this->project_path);
+                                std::string project_dir = project_file_path.parent_path().string();
+                                if (project_dir.empty()) project_dir = ".";
+                                this->file_tree->set_root_directory(project_dir);
+                                
                                 EmberEngine::Logger::info("EditorApp", "Created project: " + this->project_path);
                             } else if(!this->project_error.empty()) {
                                 EmberEngine::Logger::warn("EditorApp", this->project_error);
@@ -364,6 +403,7 @@ class EditorApp : public EmberEngine::Application
             this->viewport_3d->render_ui();
             this->viewport_2d->render_ui();
             this->inspector->render_ui(&this->viewport_2d->get_walls_mutable(), this->viewport_2d->get_selected_wall_index(), &this->viewport_2d->get_rooms_mutable(), this->viewport_2d->get_selected_room_index());
+            this->file_tree->render_ui();
         }
 
         bool is_running() override

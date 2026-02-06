@@ -9,7 +9,7 @@
       "name": "windows",
       "displayName": "Windows Build",
       "description": "Target Windows",
-      "generator": "MinGW Makefiles",
+      "generator": "Ninja",
       "cacheVariables": {
         "EE_PLATFORM_DEFINE": "EE_PLATFORM_WINDOWS"
       }
@@ -18,7 +18,7 @@
       "name": "linux",
       "displayName": "Linux Build",
       "description": "Target Linux",
-      "generator": "Unix Makefiles",
+      "generator": "Ninja",
       "cacheVariables": {
         "EE_PLATFORM_DEFINE": "EE_PLATFORM_LINUX"
       }
@@ -27,7 +27,7 @@
       "name": "macos",
       "displayName": "macOS Build",
       "description": "Target macOS",
-      "generator": "Unix Makefiles",
+      "generator": "Ninja",
       "cacheVariables": {
         "EE_PLATFORM_DEFINE": "EE_PLATFORM_MACOS"
       }

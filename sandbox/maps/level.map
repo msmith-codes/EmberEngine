@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "walls": [
+    {
+      "start": {"x": 48.000, "y": 16.000},
+      "end": {"x": 16.000, "y": 48.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 16.000, "y": 48.000},
+      "end": {"x": 16.000, "y": 128.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 16.000, "y": 128.000},
+      "end": {"x": 48.000, "y": 160.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 48.000, "y": 160.000},
+      "end": {"x": 128.000, "y": 160.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 128.000, "y": 160.000},
+      "end": {"x": 160.000, "y": 128.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 160.000, "y": 64.000},
+      "end": {"x": 160.000, "y": 48.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 160.000, "y": 48.000},
+      "end": {"x": 128.000, "y": 16.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 128.000, "y": 16.000},
+      "end": {"x": 48.000, "y": 16.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 160.000, "y": 112.000},
+      "end": {"x": 160.000, "y": 128.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 160.000, "y": 64.000},
+      "end": {"x": 160.000, "y": 112.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": true
+    },
+    {
+      "start": {"x": 160.000, "y": 64.000},
+      "end": {"x": 224.000, "y": 64.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 160.000, "y": 112.000},
+      "end": {"x": 224.000, "y": 112.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    },
+    {
+      "start": {"x": 224.000, "y": 112.000},
+      "end": {"x": 224.000, "y": 64.000},
+      "height": 64.000,
+      "texture": "",
+      "portal": false
+    }
+  ],
+  "rooms": [
+    {
+      "vertices": [{"x": 48.000, "y": 16.000}, {"x": 16.000, "y": 48.000}, {"x": 16.000, "y": 128.000}, {"x": 48.000, "y": 160.000}, {"x": 128.000, "y": 160.000}, {"x": 160.000, "y": 128.000}, {"x": 160.000, "y": 112.000}, {"x": 160.000, "y": 64.000}, {"x": 160.000, "y": 48.000}, {"x": 128.000, "y": 16.000}],
+      "floor_height": 0.000,
+      "ceiling_height": 64.000,
+      "floor_texture": "",
+      "ceiling_texture": "res://assets/textures/brown_planks.jpg"
+    },
+    {
+      "vertices": [{"x": 160.000, "y": 64.000}, {"x": 224.000, "y": 64.000}, {"x": 224.000, "y": 112.000}, {"x": 160.000, "y": 112.000}],
+      "floor_height": 0.000,
+      "ceiling_height": 64.000,
+      "floor_texture": "",
+      "ceiling_texture": ""
+    }
+  ]
+}

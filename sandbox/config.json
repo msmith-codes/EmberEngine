@@ -1,0 +1,18 @@
+{
+  "render": {
+    "texture_filtering": "linear",
+    "default_wall_height": 64.0,
+    "field_of_view": 90.0,
+    "render_distance": 1000.0
+  },
+  "assets": {
+    "texture_path": "res://assets/textures/",
+    "model_path": "res://assets/models/",
+    "sound_path": "res://assets/sounds/"
+  },
+  "editor": {
+    "grid_size": 16.0,
+    "snap_to_grid": true,
+    "show_wireframe": false
+  }
+}

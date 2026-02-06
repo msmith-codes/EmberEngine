@@ -78,6 +78,14 @@ class EditorViewport2D
         const std::vector<Wall>& get_walls() const;
         std::vector<Wall>& get_walls_mutable();
         
+        // Map loading
+        bool load_map(const std::string& filepath);
+        
+        // Current map file tracking
+        const std::string& get_current_map_path() const;
+        std::string get_current_map_filename() const;
+        bool has_map_loaded() const;
+        
         int get_selected_wall_index() const;
         void set_selected_wall_index(int index);
         bool has_selection() const;
@@ -97,7 +105,7 @@ class EditorViewport2D
         bool is_hovered_;
         bool is_focused_;
 
-        char map_path_buffer[260];
+        std::string current_map_path;  // Path of currently loaded map file
         
         EditorMode current_mode;
         std::vector<Wall> walls;
